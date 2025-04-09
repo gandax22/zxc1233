@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -15,6 +16,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "clean": "if exist docs (rd /s /q docs)",
+    "docs:win": "npm run clean && react-scripts build && move build docs",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

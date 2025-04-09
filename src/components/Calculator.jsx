@@ -22,10 +22,12 @@ const Calculator = () => {
   function calcResult() {
     if (expression.length !== 0) {
       try {
+        // Замена тригонометрических функций и корня
         const modifiedExpression = expression
           .replace(/sin(([^)]+))/g, (match, p1) => `Math.sin(${p1} * Math.PI / 180)`)
           .replace(/cos(([^)]+))/g, (match, p1) => `Math.cos(${p1} * Math.PI / 180)`)
-          .replace(/tan(([^)]+))/g, (match, p1) => `Math.tan(${p1} * Math.PI / 180)`);
+          .replace(/tan(([^)]+))/g, (match, p1) => `Math.tan(${p1} * Math.PI / 180)`)
+          .replace(/√(([^)]+))/g, (match, p1) => `Math.sqrt(${p1})`); // Корректная замена корня
 
         let compute = eval(modifiedExpression);
         compute = parseFloat(compute.toFixed(4));
@@ -47,14 +49,15 @@ const Calculator = () => {
       setDisplayEXP(displayEXP.slice(0, -1));
       setExpression(expression.slice(0, -1));
     } else if (sciFunc.hasOwnProperty(value)) {
-      setDisplayEXP(displayEXP + value + "("); // добавляем открывающую скобку
-      setExpression(expression + value + "(");
+      setDisplayEXP(displayEXP + value ); 
+      setExpression(expression + value );
     } else if (value === "!") {
       const lastNum = extractLastNum(expression);
       if (lastNum != null) {
         const num = parseFloat(lastNum);
+        const fact = factorial(num);
         setDisplayEXP(displayEXP + value);
-        setExpression(expression.replace(lastNum, factorial(num)));
+        setExpression(expression.replace(lastNum, fact));
       }
     } else if (value === "=") calcResult();
     else {
@@ -64,15 +67,17 @@ const Calculator = () => {
   }
 
   function factorial(n) {
+    if (n < 0) return NaN; // Факториал не определен для отрицательных чисел
     let result = 1;
     for (let i = 1; i <= n; i++) result *= i;
     return result;
   }
 
   function extractLastNum(exp) {
-    const numbers = exp.match(/d+/g); // исправлено регулярное выражение
+    const numbers = exp.match(/\d+/g);
     return numbers ? numbers[numbers.length - 1] : null;
   }
+
 
   return (
     <div className="calculator">

@@ -22,12 +22,11 @@ const Calculator = () => {
   function calcResult() {
     if (expression.length !== 0) {
       try {
-        // Замена тригонометрических функций и корня
         const modifiedExpression = expression
           .replace(/sin(([^)]+))/g, (match, p1) => `Math.sin(${p1} * Math.PI / 180)`)
           .replace(/cos(([^)]+))/g, (match, p1) => `Math.cos(${p1} * Math.PI / 180)`)
           .replace(/tan(([^)]+))/g, (match, p1) => `Math.tan(${p1} * Math.PI / 180)`)
-          .replace(/√(([^)]+))/g, (match, p1) => `Math.sqrt(${p1})`); // Корректная замена корня
+          .replace(/√(([^)]+))/g, (match, p1) => `Math.sqrt(${p1})`); 
 
         let compute = eval(modifiedExpression);
         compute = parseFloat(compute.toFixed(4));
@@ -67,7 +66,7 @@ const Calculator = () => {
   }
 
   function factorial(n) {
-    if (n < 0) return NaN; // Факториал не определен для отрицательных чисел
+    if (n < 0) return NaN;
     let result = 1;
     for (let i = 1; i <= n; i++) result *= i;
     return result;
